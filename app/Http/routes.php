@@ -20,3 +20,7 @@ Route::get('coba2','HomeController@get');
 Route::get('daftar','HomeController@daftar');
 Route::get('login','HomeController@login');
 Route::post('formlogin','HomeController@loginform');
+Route::get('dashboard','HomeController@dashboard');
+Route::get('profile','HomeController@profil');
+Route::post('register','HomeController@register');
+Route::get('logout','HomeController@logout');

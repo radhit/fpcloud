@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Dashboard</title>
+    <title>DOCOLINE | Dashboard</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -37,7 +37,7 @@
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>A</b>LT</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Admin</b>LTE</span>
+          <span class="logo-lg"><b>Docoline</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -58,14 +58,14 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="hidden-xs">Username</span>
+                  <span class="hidden-xs">{{Auth::user()->username}}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-right">
-                      <a href="index.html" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="{{URL::to('logout')}}" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -83,12 +83,12 @@
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li>
-              <a href="index_dashboard.php">
+              <a href="{{URL::to('dashboard')}}">
                 <i class="fa fa-files-o"></i> <span>Dokumen</span>
               </a>
             </li>
             <li>
-              <a href="profil.php">
+              <a href="{{URL::to('profile')}}">
                 <i class="fa fa-laptop"></i> <span>Profil</span>
               </a>
             </li>

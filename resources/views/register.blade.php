@@ -35,7 +35,7 @@
 			DAFTAR
 		</div>
 		<div class="login-form">
-			<form action="http://10.151.36.100:5000/Register" method="POST">
+			<form action="http://localhost:5000/Register" method="POST">
 				<div class="form-group">
                     <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap">
                 </div>
@@ -48,7 +48,7 @@
                 <div class="form-group">
                     <input type="password" class="form-control" name="password" placeholder="Password">
                 </div>
-              
+               
 				<button type="submit" class="btn btn-login">Masuk</button>
 			</form>
 		</div>

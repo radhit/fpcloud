@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Dashboard</title>
+    <title>Docoline | Dashboard</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -37,7 +37,7 @@
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>A</b>LT</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Admin</b>LTE</span>
+          <span class="logo-lg"><b>Docoline</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -58,14 +58,14 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="hidden-xs">Username</span>
+                  <span class="hidden-xs">{{Auth::user()->username}}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="{{URL::to('logout')}}" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -93,12 +93,12 @@
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li>
-              <a href="index.php">
+             <a href="{{URL::to('dashboard')}}">
                 <i class="fa fa-files-o"></i> <span>Dokumen</span>
               </a>
             </li>
             <li>
-              <a href="#">
+               <a href="{{URL::to('profile')}}">
                 <i class="fa fa-laptop"></i> <span>Profil</span>
               </a>
             </li>
@@ -129,38 +129,41 @@
                   <h3 class="box-title">Edit Profil</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal">
+
+                @foreach($nama as $key)
+                <form class="form-horizontal" action="Http://localhost:5000/updateuser/{{Auth::user()->id}}" method="POST">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="inputEmail3" class="col-sm-2 control-label">Nama Lengkap</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputEmail3" placeholder="Nama Lengkap">
+                        <input type="text" class="form-control" id="inputEmail3" name="nama" value="{{$key['nama']}}">
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
                       <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                        <input type="email" class="form-control" id="inputEmail3" name="email" value="{{$key['email']}}">
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="inputEmail3" class="col-sm-2 control-label">Username</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputEmail3" placeholder="Username">
+                        <input type="text" class="form-control" id="inputEmail3" name="username" value="{{$key['username']}}">
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
                       <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                        <input type="password" class="form-control" id="inputPassword3"  name="password" placeholder="Password">
                       </div>
                     </div>
+              
                       <div class="form-group">
                       <label for="inputEmail3" class="col-sm-2 control-label">Status Pengguna</label>
                         <div class="col-sm-10">
-                          <select class="form-control">
-                            <option>Free</option>
-                            <option>Paid</option>
+                          <select class="form-control" name="status">
+                            <option value="0">Free</option>
+                            <option value="1">Paid</option>
                           </select>
                         </div>
                       </div>
@@ -168,6 +171,7 @@
                     </div>
                   </div><!-- /.box-body -->
                 </form>
+                      @endforeach
                 <br/>
               <div class="col-md-12" >
 

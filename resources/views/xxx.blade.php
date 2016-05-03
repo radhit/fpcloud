@@ -1,7 +1,7 @@
 <html>
       <?php 
         foreach ($nama as $key) {
-          echo $key['alamat'];
+          echo $key['email'];
           echo $key['nama'];
         }
       ?>
