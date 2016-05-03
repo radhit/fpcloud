@@ -14,6 +14,7 @@ use DB;
 use Illuminate\Http\JsonResponse;
 use View;
 use App\pengguna;
+use Response;
 
 class HomeController extends controller{
 
@@ -145,6 +146,44 @@ class HomeController extends controller{
 		return view('profil')->with('nama', $data);
   //       	return view('profil');
         }
+
+        public function update(){
+        	$data=Input::all();
+        	$password=bcrypt($data['password']);
+        	 $id=Auth::user()->id;
+        	 DB::table('user')->where('id', $id) ->update(['nama_user' => $data['nama']]);
+              DB::table('user')->where('id', $id)->update(['password' => $data['password']]);
+              DB::table('user')->where('id', $id) ->update(['username' => $data['username']]);
+               DB::table('user')->where('id', $id) ->update(['paidstatus' => $data['status']]);
+               DB::table('user')->where('id', $id)  ->update(['email' => $data['email']]);
+
+                return redirect('profile');
+
+            
+
+        }
+
+        public function edit(){
+        	return view('edit_dokumen');
+        }
     
+    public function save(){
+    	$data=Input::all();
+    	$nama=$data['username'];
+    	$phpWord = new \PhpOffice\PhpWord\PhpWord();
+    	$section = $phpWord->addSection();
+    	$html=$data['editor'];
+    	//$phpWord = \PhpOffice\PhpWord\IOFactory::load($html, 'HTML');
+
+		\PhpOffice\PhpWord\Shared\Html::addHtml($section, $html);
+    	//$section->addText($data['creator']);
+    	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+		$objWriter->save($nama.'.docx');
+		//dd($data['editor'] );
+		$judul=$nama.'.docx';
+
+		 return Response::download(($judul));
+
+    }
 
 }

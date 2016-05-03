@@ -19,6 +19,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -123,13 +124,17 @@
           <div class="row">
             <!-- Left col -->
             <div class="col-md-8">
-               <form action="" method="post" enctype="multipart/form-data">
+               <form action="{{URL::to('savefile')}}" method="post" enctype="multipart/form-data">
                 <hr/>
                   <h3>Nama Dokumen</h3>
-                 <select class="form-control" name="" style="height:60px">
+                   <div class="form-group">
+                    <input type="text" class="form-control" name="username" placeholder="judul dokumen">
+                </div>
+               <textarea class="ckeditor" name="editor"></textarea>
                   <!-- Dropdown id dan nama dokumen-->
                  </select>
                  <br>
+                  {{csrf_field()}}
                 <button type="submit" class="btn btn-sm btn-success btn-flat pull-right">Simpan</button>
                </form>
 

@@ -24,3 +24,6 @@ Route::get('dashboard','HomeController@dashboard');
 Route::get('profile','HomeController@profil');
 Route::post('register','HomeController@register');
 Route::get('logout','HomeController@logout');
+Route::post('updatedata','HomeController@update');
+Route::get('editdokumen','HomeController@edit');
+Route::post('savefile','HomeController@save');
