@@ -16,6 +16,7 @@ use View;
 use App\pengguna;
 use Response;
 use App\file;
+use App\kontributor;
 
 class HomeController extends controller{
 
@@ -134,6 +135,30 @@ class HomeController extends controller{
         	return view('dashboard')->with('nama', $data);
         }
 
+
+        public function dashboard2(){
+       
+		$id=Auth::user()->id;
+       	$data=array();
+		$json = file_get_contents('http://localhost:5000/getdatasharedfileuser/'.$id);
+		$obj= json_decode($json,true);
+		//var_dump($obj);
+		$i = 0;
+		foreach ($obj['data'] as $key => $value) {
+			# code...
+			$data[$i]['judul']=$value['judul'];
+			$data[$i]['password']=$value['password'];
+			$data[$i]['timestamp']=$value['timestamp'];
+			$data[$i]['id']=$value['id'];
+
+
+		
+			$i+=1;
+		}
+
+        	return view('dashboard')->with('nama', $data);
+        }
+
         public function profil(){
         $id=Auth::user()->id;
        	$data=array();
@@ -190,7 +215,7 @@ class HomeController extends controller{
 	    	$section = $phpWord->addSection();
 	    	$html=$data['editor'];
 	    	//$phpWord = \PhpOffice\PhpWord\IOFactory::load($html, 'HTML');
-		$nama=$data['username'];
+			$nama=$data['username'];
 			\PhpOffice\PhpWord\Shared\Html::addHtml($section, $html);
 	    	//$section->addText($data['creator']);
 	    	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
@@ -213,6 +238,37 @@ class HomeController extends controller{
 
     }
 
+    public function tambahkontributor(){
+    	$data=input::all();
+    	$id=$data['idfile'];
+    	$nama=$data['kontributor'];
+    	$iduser= pengguna::select('id')->where('username',$nama)->first();
+    	
+	
+			 $iduser2=$iduser['id'];	
+
+     
+	if($iduser!=NULL){
+    		
+			 kontributor::insertGetId(array(
+            'id_user'=> $iduser2,
+            'id_file'=>$id
+           
+            ));
+			session::flash('berhasil','sdsdsqf');
+			return redirect('dashboard');
+		}
+		else if($iduser==NULL){
+
+			session::flash('gagal','sdsdsd');
+			return redirect('dashboard');
+		}
+
+		}	
+		
+		
+			
+    
       
 
 }

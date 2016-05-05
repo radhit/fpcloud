@@ -30,3 +30,5 @@ Route::get('editdokumen/{id}','HomeController@edit');
 Route::post('savefile','HomeController@save');
 Route::get('xx','HomeController@getdatafile');
 Route::post('updatekonten','HomeController@updatekonten');
+Route::post('tambahkontributor','HomeController@tambahkontributor');
+Route::get('sharedfile','HomeController@dashboard2');
