@@ -64,7 +64,8 @@ class HomeController extends controller{
             'email'=>$data['email'],
             'username'=>$data['username'],
         
-            'password'=> $pass
+            'password'=> $pass,
+            'dateRegister' => $data['dateRegister']
            
             ));
             return redirect('login');
@@ -135,8 +136,6 @@ class HomeController extends controller{
 			$data[$i]['nama']=$value['nama_user'];
 			$data[$i]['email']=$value['email'];
 			$data[$i]['username']=$value['username'];
-
-		
 			$i+=1;
 		}
 

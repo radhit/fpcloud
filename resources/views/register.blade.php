@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php 
+
+    $date = date("d-m-Y H:i:s");
+
+?>
 
 <html>
 <head>
@@ -48,6 +53,7 @@
                 <div class="form-group">
                     <input type="password" class="form-control" name="password" placeholder="Password">
                 </div>
+                <input type="hidden" name="dateRegister" value="<?php echo $date; ?>">
                
 				<button type="submit" class="btn btn-login">Masuk</button>
 			</form>
