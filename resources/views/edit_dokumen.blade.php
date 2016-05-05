@@ -134,11 +134,12 @@
                  <br>
                   {{csrf_field()}}
                   <input type="hidden" value="{{$key->id}}" name="id">
+                   <input type="hidden" value="{{$key->judul}}" name="username">
                 <button type="submit" class="btn btn-sm btn-success btn-flat pull-right">Simpan</button>
                </form>
                 <form action="{{URL::to('savefile')}}" method="post" enctype="multipart/form-data">
                    <input type="hidden" value="{{$key->judul}}" name="username">
-                   <input type="hidden" value="{{$key->konten}}" name="editor">
+                  
                    {{csrf_field()}}
                 <button type="submit" class="btn btn-sm btn-success btn-flat pull-right">Download</button>
                 </form>

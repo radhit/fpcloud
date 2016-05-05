@@ -186,25 +186,30 @@ class HomeController extends controller{
         	$timestamp=date("Y-m-d h:i:s");
         	 DB::table('file')->where('id', $id) ->update(['konten' => $data['editor']]);
              DB::table('file')->where('id', $id)->update(['timestamp' => $timestamp]);
+	         $phpWord = new \PhpOffice\PhpWord\PhpWord();
+	    	$section = $phpWord->addSection();
+	    	$html=$data['editor'];
+	    	//$phpWord = \PhpOffice\PhpWord\IOFactory::load($html, 'HTML');
+		$nama=$data['username'];
+			\PhpOffice\PhpWord\Shared\Html::addHtml($section, $html);
+	    	//$section->addText($data['creator']);
+	    	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+			$objWriter->save('dokumen/'.$nama.'.docx');
+			//dd($data['editor'] );
+			
              return redirect('editdokumen/'.$id);
         }
     
     public function save(){
     	$data=Input::all();
     	$nama=$data['username'];
-    	$phpWord = new \PhpOffice\PhpWord\PhpWord();
-    	$section = $phpWord->addSection();
-    	$html=$data['editor'];
-    	//$phpWord = \PhpOffice\PhpWord\IOFactory::load($html, 'HTML');
+    	$judul=$nama.'.docx';
+    	 $file = public_path()."/dokumen/".$judul;
+   		 $headers = array('Content-Type' => ' docx');
 
-		\PhpOffice\PhpWord\Shared\Html::addHtml($section, $html);
-    	//$section->addText($data['creator']);
-    	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-		$objWriter->save($nama.'.docx');
-		//dd($data['editor'] );
-		$judul=$nama.'.docx';
-
-		 return Response::download(($judul));
+		 $respon=Response::download($file,$judul,$headers);
+		   ob_end_clean();
+		   return $respon;
 
     }
 
