@@ -206,7 +206,4 @@ class HomeController extends controller{
 		 return Response::download(($judul));
 
     }
-
-      
-
 }
