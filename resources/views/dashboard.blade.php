@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Dashboard</title>
+    <title>DOCOLINE | Dashboard</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -37,7 +37,7 @@
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>A</b>LT</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Admin</b>LTE</span>
+          <span class="logo-lg"><b>Docoline</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -58,14 +58,14 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="hidden-xs">Username</span>
+                  <span class="hidden-xs">{{Auth::user()->username}}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-right">
-                      <a href="index.html" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="{{URL::to('logout')}}" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -83,12 +83,12 @@
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li>
-              <a href="index_dashboard.php">
+              <a href="{{URL::to('dashboard')}}">
                 <i class="fa fa-files-o"></i> <span>Dokumen</span>
               </a>
             </li>
             <li>
-              <a href="profil.php">
+              <a href="{{URL::to('profile')}}">
                 <i class="fa fa-laptop"></i> <span>Profil</span>
               </a>
             </li>
@@ -134,53 +134,30 @@
                         <tr>
                           <th>ID Dokumen</th>
                           <th>Nama Dokumen</th>
-                          <th>Status</th>
+                          <th>Terakhir edit</th>
+                          <th>Edit</th>
+                          <th>Hapus</th>
+
                         </tr>
                       </thead>
                       <tbody>
+                      @foreach($nama as $key)
                         <tr>
-                          <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                          <td>Call of Duty IV</td>
-                          <td><span class="label label-success">Shipped</span></td>
+                          <td>{{$key['id']}}</td>
+                          <td>{{$key['judul']}}</td>
+                          <td>{{$key['timestamp']}}</td>
+                          <td><a href="{{URL::to('editdokumen')}}/{{$key['id']}}" class="btn btn-sm btn-warning btn-flat pull-right" style="margin-left:1%">EDIT DOKUMEN</a></td>
+                          <td><a href="hapus_dokumen.php" class="btn btn-sm btn-danger btn-flat pull-right" style="margin-left:1%">HAPUS DOKUMEN</a></td>
                         </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                          <td>Samsung Smart TV</td>
-                          <td><span class="label label-warning">Pending</span></td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                          <td>iPhone 6 Plus</td>
-                          <td><span class="label label-danger">Delivered</span></td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                          <td>Samsung Smart TV</td>
-                          <td><span class="label label-info">Processing</span></td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                          <td>Samsung Smart TV</td>
-                          <td><span class="label label-warning">Pending</span></td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                          <td>iPhone 6 Plus</td>
-                          <td><span class="label label-danger">Delivered</span></td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                          <td>Call of Duty IV</td>
-                          <td><span class="label label-success">Shipped</span></td>
-                        </tr>
+                     @endforeach
                       </tbody>
                     </table>
                   </div><!-- /.table-responsive -->
                 </div><!-- /.box-body -->
                 <div class="box-footer clearfix nav nav-tabs">
-                  <a href="hapus_dokumen.php" class="btn btn-sm btn-danger btn-flat pull-right" style="margin-left:1%">HAPUS DOKUMEN</a>
-                  <a href="edit_dokumen.php" class="btn btn-sm btn-warning btn-flat pull-right" style="margin-left:1%">EDIT DOKUMEN</a>
-                  <a href="javascript::;" class="btn btn-sm btn-info btn-flat pull-right" style="margin-left:1%">TAMBAH DOKUMEN</a>
+               
+                  
+                  <a class="btn btn-sm btn-info btn-flat pull-right" style="margin-left:1%" data-toggle="modal" data-target="#tambahmodal">TAMBAH DOKUMEN</a>
                 </div><!-- /.box-footer -->
               </div><!-- /.box -->
             </div><!-- /.col -->
@@ -188,7 +165,35 @@
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
-      
+      <div id="tambahmodal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header"  style="text-align:center">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Dokumen Baru</h4>
+      </div>
+      <div class="modal-body">
+   <form action="http://localhost:5000/tambahdokumen" method="POST">
+        <div class="form-group">
+          <input name="judul" type="text" placeholder="Judul Dokumen" class="form-control">
+        </div>
+        <div class="form-group">
+          <input name="password" type="password" placeholder="password" class="form-control">
+        </div>
+         <input name="author" type="hidden" value="{{Auth::user()->id}}">
+       
+      </div>
+      <div class="modal-footer">
+       <button type="submit" class="btn btn-primary">Tambahkan</button>
+      </form>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
       <!-- Control Sidebar -->
       <!-- /.control-sidebar -->

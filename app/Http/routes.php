@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -20,3 +21,12 @@ Route::get('coba2','HomeController@get');
 Route::get('daftar','HomeController@daftar');
 Route::get('login','HomeController@login');
 Route::post('formlogin','HomeController@loginform');
+Route::get('dashboard','HomeController@dashboard');
+Route::get('profile','HomeController@profil');
+Route::post('register','HomeController@register');
+Route::get('logout','HomeController@logout');
+Route::post('updatedata','HomeController@update');
+Route::get('editdokumen/{id}','HomeController@edit');
+Route::post('savefile','HomeController@save');
+Route::get('xx','HomeController@getdatafile');
+Route::post('updatekonten','HomeController@updatekonten');

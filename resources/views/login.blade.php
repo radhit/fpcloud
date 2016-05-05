@@ -37,7 +37,7 @@
 		<div class="login-form">
 			<form action="{{URL::to('formlogin')}}" method="POST">
 				<div class="form-group">
-					<input name="name" type="text" placeholder="username" class="form-control">
+					<input name="username" type="text" placeholder="username" class="form-control">
 				</div>
 				<div class="form-group">
 					<input name="password" type="password" placeholder="password" class="form-control">
