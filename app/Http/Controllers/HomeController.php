@@ -15,6 +15,7 @@ use Illuminate\Http\JsonResponse;
 use View;
 use App\pengguna;
 use Response;
+use App\file;
 
 class HomeController extends controller{
 
@@ -112,15 +113,25 @@ class HomeController extends controller{
 
         public function dashboard(){
        
-	// for ($i=0; $i < sizeof($obj); $i++) { 
-		// 	# code...
-		// 	echo $obj[0]['alamat'];
-		// }
-		// 11
-		// $data = $obj->getData();
-		// // echo $data->alamat;
-		// var_dump($data);
-        	return view('dashboard');
+		$id=Auth::user()->id;
+       	$data=array();
+		$json = file_get_contents('http://localhost:5000/getdatafileuser/'.$id);
+		$obj= json_decode($json,true);
+		//var_dump($obj);
+		$i = 0;
+		foreach ($obj['data'] as $key => $value) {
+			# code...
+			$data[$i]['judul']=$value['judul'];
+			$data[$i]['password']=$value['password'];
+			$data[$i]['timestamp']=$value['timestamp'];
+			$data[$i]['id']=$value['id'];
+
+
+		
+			$i+=1;
+		}
+
+        	return view('dashboard')->with('nama', $data);
         }
 
         public function profil(){
@@ -163,8 +174,19 @@ class HomeController extends controller{
 
         }
 
-        public function edit(){
-        	return view('edit_dokumen');
+        public function edit($id){
+        	$data=array();
+
+        	$data['konten']=file::where('id','=',$id)->get();
+        	return view('edit_dokumen',$data);
+        }
+        public function updatekonten(){
+        	$data=Input::all();
+        	$id=$data['id'];
+        	$timestamp=date("Y-m-d h:i:s");
+        	 DB::table('file')->where('id', $id) ->update(['konten' => $data['editor']]);
+             DB::table('file')->where('id', $id)->update(['timestamp' => $timestamp]);
+             return redirect('editdokumen/'.$id);
         }
     
     public function save(){
@@ -185,5 +207,7 @@ class HomeController extends controller{
 		 return Response::download(($judul));
 
     }
+
+      
 
 }

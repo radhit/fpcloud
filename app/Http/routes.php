@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -25,5 +26,7 @@ Route::get('profile','HomeController@profil');
 Route::post('register','HomeController@register');
 Route::get('logout','HomeController@logout');
 Route::post('updatedata','HomeController@update');
-Route::get('editdokumen','HomeController@edit');
+Route::get('editdokumen/{id}','HomeController@edit');
 Route::post('savefile','HomeController@save');
+Route::get('xx','HomeController@getdatafile');
+Route::post('updatekonten','HomeController@updatekonten');

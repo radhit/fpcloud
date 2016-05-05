@@ -167,7 +167,7 @@
                           </select>
                         </div>
                       </div>
-                          {{csrf_field()}}
+                      
                     <button type="submit" class="btn btn-info pull-right">Simpan</button>
                     </div>
                   </div><!-- /.box-body -->
