@@ -170,7 +170,7 @@ class HomeController extends controller{
             // return redirect('loginadmin');
         }
 
-        public function dashboard(){
+      public function dashboard(){
        
 
 
@@ -180,6 +180,8 @@ class HomeController extends controller{
 
 
        	$data=array();
+
+
 		$json = file_get_contents('http://localhost:5000/getdatafileuser/'.$id);
 		$obj= json_decode($json,true);
 		//var_dump($obj);
@@ -190,13 +192,17 @@ class HomeController extends controller{
 			$data[$i]['password']=$value['password'];
 			$data[$i]['timestamp']=$value['timestamp'];
 			$data[$i]['id']=$value['id'];
+			$data[$i]['flag']=$value['flag'];
 
 
 		
 			$i+=1;
 		}
-
-        	return view('dashboard')->with('nama', $data);
+			$count=file::where('author','=',$id)->count();
+			$paiduser1=pengguna::select('paidstatus')->where('id','=',$id)->first();
+			$paiduser=$paiduser1['paidstatus'];
+			//echo $paiduser;
+        	return view('dashboard')->with('nama', $data)->with('jumlah',$count)->with('status',$paiduser);
         }
 
 
@@ -216,6 +222,7 @@ class HomeController extends controller{
 			$data[$i]['password']=$value['password'];
 			$data[$i]['timestamp']=$value['timestamp'];
 			$data[$i]['id']=$value['id'];
+			$data[$i]['flag']=$value['flag'];
 
 
 		
@@ -267,7 +274,7 @@ class HomeController extends controller{
 
         public function edit($id){
         	$data=array();
-
+        	 DB::table('file')->where('id', $id) ->update(['flag' => 1]);
         	$data['konten']=file::where('id','=',$id)->get();
         	return view('edit_dokumen',$data);
         }
@@ -275,6 +282,7 @@ class HomeController extends controller{
         	$data=Input::all();
         	$id=$data['id'];
         	$timestamp=date("Y-m-d h:i:s");
+        	 DB::table('file')->where('id', $id) ->update(['flag' => '']);
         	 DB::table('file')->where('id', $id) ->update(['konten' => $data['editor']]);
              DB::table('file')->where('id', $id)->update(['timestamp' => $timestamp]);
 	         $phpWord = new \PhpOffice\PhpWord\PhpWord();
@@ -288,7 +296,7 @@ class HomeController extends controller{
 			$objWriter->save('dokumen/'.$nama.'.docx');
 			//dd($data['editor'] );
 			
-             return redirect('editdokumen/'.$id);
+             return redirect('dashboard');
         }
     
     public function save(){
@@ -373,6 +381,24 @@ class HomeController extends controller{
       	DB::table('user')->where('id','=',$id)->delete();
       	session::flash('berhasil','sasa');
       	return redirect('inihalamanadmin');
+
+      }
+
+      public function keloladokumen(){
+      	$data=input::all();
+      	$id=$data['idfile'];
+      	$password=$data['password'];
+      	$file=file::select('password')->where('id','=',$id)->first();
+      	$passfile=$file['password'];
+      	if($password==$passfile){
+      		return redirect('editdokumen/'.$id);
+      	}
+      	else{
+      		session::flash('salah','sas');
+      		return redirect('sharedfile');
+      	}
+
+
 
       }
 

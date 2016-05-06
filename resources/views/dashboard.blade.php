@@ -163,13 +163,22 @@
                         </tr>
                       </thead>
                       <tbody>
+
                       @foreach($nama as $key)
                         <tr>
-                          <td>{{$key['id']}}</td>
+
+                          <td>{{$jumlah}}</td>
                           <td>{{$key['judul']}}</td>
                           <td>{{$key['timestamp']}}</td>
                           <?php $id=$key['id'];?>
-                          <td><a href="{{URL::to('editdokumen')}}/{{$key['id']}}" class="btn btn-warning" style="margin-left:1%">EDIT DOKUMEN</a></td>
+                          <td>
+                          <?php $flag=$key['flag'];?>
+                            @if($flag==NULL||$flag==0)
+                            <a href="{{URL::to('editdokumen')}}/{{$key['id']}}" class="btn btn-warning" style="margin-left:1%">EDIT DOKUMEN</a>
+                            @else
+                            Dokumen sedang dikelola akun lain
+                            @endif
+                          </td>
                           <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahkontributor{{$id}}" data-id="{{$id}}">Tambah Kontributor</button></td>
                           <td><a href="hapus_dokumen.php" class="btn btn-danger" style="margin-left:1%">HAPUS DOKUMEN</a></td>
                         </tr>
@@ -181,7 +190,6 @@
                 </div><!-- /.box-body -->
                 <div class="box-footer clearfix nav nav-tabs">
                
-                  
                   <a class="btn btn-sm btn-info btn-flat pull-right" style="margin-left:1%" data-toggle="modal" data-target="#tambahmodal">TAMBAH DOKUMEN</a>
                 </div><!-- /.box-footer -->
               </div><!-- /.box -->
@@ -200,6 +208,9 @@
         <h4 class="modal-title">Dokumen Baru</h4>
       </div>
       <div class="modal-body">
+
+      @if(($jumlah<5 && $status==NULL)  || $status!=NULL )
+
    <form action="http://localhost:5000/tambahdokumen" method="POST">
         <div class="form-group">
           <input name="judul" type="text" placeholder="Judul Dokumen" class="form-control">
@@ -212,7 +223,13 @@
       </div>
       <div class="modal-footer">
        <button type="submit" class="btn btn-primary">Tambahkan</button>
+    
       </form>
+  
+  @else
+      Batas maksimal pembuatan dokumen anda telah habis silahkan lakukan pembayaran
+      @endif
+
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
     </div>

@@ -134,6 +134,9 @@
                <form action="{{URL::to('updatekonten')}}" method="post" enctype="multipart/form-data">
                 <hr/>
                 @foreach($konten as $key)
+
+                  
+
                   <h3>Nama Dokumen : {{$key->judul}}</h3>
                    <textarea class="ckeditor" name="editor">{{$key->konten}}</textarea>
                   <!-- Dropdown id dan nama dokumen-->

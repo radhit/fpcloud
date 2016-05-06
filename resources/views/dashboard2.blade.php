@@ -27,7 +27,7 @@
   swal("Sukses", "Kontributor Berhasil Ditambahkan", "success")
   }
     function notifkerengagal(){
-  swal("gagal", "Username yang anda masukan tidak terdaftar", "error")
+  swal("gagal", "Password yang anda masukan salah", "error")
   }
   </script>
 
@@ -115,7 +115,7 @@
   @if (Session::has('berhasil'))
         <script type="text/javascript">notifkeren();</script>
     
-    @elseif (Session::has('gagal'))
+    @elseif (Session::has('salah'))
         <script type="text/javascript">notifkerengagal();</script>
     @endif
       <!-- Content Wrapper. Contains page content -->
@@ -168,8 +168,13 @@
                           <td>{{$key['id']}}</td>
                           <td>{{$key['judul']}}</td>
                           <td>{{$key['timestamp']}}</td>
-                          <?php $id=$key['id'];?>
-                          <td><a href="{{URL::to('editdokumen')}}/{{$key['id']}}" class="btn btn-warning" style="margin-left:1%">EDIT DOKUMEN</a></td>
+                          <?php $id=$key['id']; $flag=$key['flag'];?>
+                         
+                          <td> @if($flag==NULL||$flag==0)<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#keloladokumen{{$id}}" data-id="{{$id}}">Kelola Dokumen</button>
+                           @else
+                            Dokumen sedang dikelola akun lain
+                            @endif
+                            </td>
                           <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahkontributor{{$id}}" data-id="{{$id}}">Tambah Kontributor</button></td>
                         
                         </tr>
@@ -212,6 +217,40 @@
       <input type="hidden" value="{{$key['id']}}" name="idfile">
       {{csrf_field()}}
        <button type="submit" class="btn btn-primary">Tambahkan</button>
+      
+      
+      </form>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+@endforeach
+
+
+@foreach($nama as $key)
+   <div id="keloladokumen{{$key['id']}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+
+    <div class="modal-content">
+      <div class="modal-header"  style="text-align:center">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Password Dokumen</h4>
+      </div>
+      <div class="modal-body">
+   <form action="{{URL::to('keloladokumen')}}" method="POST">
+        <div class="form-group">
+          <input name="password" type="password" placeholder="Masukan password dokumen" class="form-control">
+          <input type="hidden" value="{{$key['id']}}" name="idfile">
+        </div>
+        </div>
+      <div class="modal-footer">
+      <input type="hidden" value="{{$key['id']}}" name="idfile">
+      {{csrf_field()}}
+       <button type="submit" class="btn btn-primary">Kirim</button>
       
       
       </form>

@@ -169,7 +169,7 @@
                           <?php $id=$key['id'];?>
                           <td>@if ($buktipembayaran!=NULL) <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahkontributor{{$id}}" data-id="{{$id}}">Bukti Pembayaran</button> @else Tidak ada bukti Pembayaran @endif</td>
                           <td>
-                                @if($paidstatus==NULL)
+                                @if($paidstatus==NULL||$paidstatus==0)
                                <form action="{{URL::to('updatepembayaran')}}" method="POST">
                                <input type="hidden" value="{{$key['id']}}" name="id">
                                {{csrf_field()}}
