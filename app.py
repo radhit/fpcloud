@@ -38,7 +38,7 @@ def register():
        
            cur.execute("""INSERT INTO user (nama_user,password,email,username,dateregispaid) VALUES(%s,%s,%s,%s,%s)""", (nama,passok,email,username,st))
            db.commit()
-           return redirect("http://10.151.36.100/login",code=302)
+           return redirect("http://10.151.36.100:8080/login",code=302)
 
         
 @app.route("/getdatauser/<int:id>",methods=["get"])
@@ -64,7 +64,7 @@ def update(id):
        
         cur.execute("""UPDATE user SET nama_user=%s, password=%s, email=%s, username=%s,paidstatus=%s where id=%d) """, (nama,passok,email,username,status))%id
         db.commit()
-        return redirect("http://10.151.36.100/profil",code=302)
+        return redirect("http://10.151.36.100:8080/profil",code=302)
         
 @app.route("/tambahdokumen",methods=["POST"])
 def tambahdokumen():
@@ -77,7 +77,7 @@ def tambahdokumen():
         st = datetime.datetime.fromtimestamp(xx).strftime('%Y-%m-%d %H:%M:%S')
         cur.execute("""INSERT INTO file (author,password,judul,timestamp) VALUES(%s,%s,%s,%s)""", (author,password,judul,st))
         db.commit()
-        return redirect("http://10.151.36.100/dashboard",code=302)
+        return redirect("http://10.151.36.100:8080/dashboard",code=302)
 
 
         
