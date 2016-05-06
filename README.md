@@ -1,27 +1,29 @@
-## Laravel PHP Framework
+## Docoline - Dokumen Online
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+Adalah aplikasi cloud berbasis website yang mempermudah pengguna untuk berbagi dokumen dengan teman / mitra kerja.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+## Daftar Fitur
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+A.	Free User
+	- Membuat Dokumen maksimal 5.
+	- Proteksi password pada dokumen.
+	- Dapat menambah penulis/kontributor dokumen.
 
-## Official Documentation
+B.	Paid User
+	- Membuat Dokumen tanpa batas.
+	- Proteksi password pada dokumen.
+	- Dapat menambah penulis/kontributor dokumen.
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+## Biaya
 
-## Contributing
+Untuk paid user akan dikenakan biaya sebesar Rp. 25.000,00 / bulan.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+### Pembuat
 
-## Security Vulnerabilities
+-	Anwar Rosyidi		(Backend Developer)
+-	Setiyo Adi Wicaksono	(Server Configurator)
+-	Ridho Perdana		(Server Configurator)
+-	Armirara Refa		(FrontEnd Developer)
+-	Riska Adhita		(FrontEnd Developer)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+#### Copyright Final Project Komputasi Awan 2016 - Teknik Informatika ITS Surabaya.
