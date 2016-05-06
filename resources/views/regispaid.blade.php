@@ -35,23 +35,24 @@
 			DAFTAR
 		</div>
 		<div class="login-form">
-			<form action="#">
+			<form action="{{URL::to('registerpaid')}}"  method="POST" enctype="multipart/form-data">
 				<div class="form-group">
-                    <input type="text" class="form-control" id="nama" placeholder="Nama Lengkap">
+                    <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap">
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" id="email" placeholder="Email">
+                    <input type="email" class="form-control" name="email" placeholder="Email">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="username" placeholder="Username">
+                    <input type="text" class="form-control" name="username" placeholder="Username">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" id="password" placeholder="Password">
+                    <input type="file" class="form-control" name="pembayaran" placeholder="Bukti Pembayaran">
                 </div>
                 <div class="form-group">
-                	<input type="hidden" id="status" value="free">
+                    <input type="password" class="form-control" name="password" placeholder="Password">
                 </div>
-				<button type="submit" class="btn btn-login">Masuk</button>
+                {{csrf_field()}}
+                <button type="submit" class="btn btn-login">DAFTAR</button>
 			</form>
 		</div>
 	</div>

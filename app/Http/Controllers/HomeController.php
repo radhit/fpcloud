@@ -18,6 +18,7 @@ use Response;
 use App\file;
 use App\kontributor;
 
+
 class HomeController extends controller{
 
 	public function get(){
@@ -57,15 +58,45 @@ class HomeController extends controller{
 		return view('login');
 	}
 
-	public function register(){
+	public function registerpaid(){
 
 		$data=Input::all();
+
+		   $rules = array(
+            'file' => 'image|max:3000',
+        );
+    
+       // PASS THE INPUT AND RULES INTO THE VALIDATOR
+        $validation = Validator::make($data, $rules);
+ 
+        // CHECK GIVEN DATA IS VALID OR NOT
+     //    if ($validation->fails()) {
+     //     Session::flash('message','Login anda gagal, silahkan cek kembali username dan password');
+     //     return Redirect::to('peserta/'.$id);
+     // }
+
+       
+        
+        
+           $file = array_get($data,'pembayaran');
+           // SET UPLOAD PATH
+            $destinationPath = 'buktipembayaran';
+            // GET THE FILE EXTENSION
+            $extension = $file->getClientOriginalExtension();
+            $nama= $file->getClientOriginalName();
+
+            // RENAME THE UPLOAD WITH RANDOM NUMBER
+            $fileName = $nama; 
+            // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY
+            $upload_success = $file->move($destinationPath, $fileName);
+            $filepath = $destinationPath . '/' . $nama;
+
         $pass=bcrypt( $data['password']);
         pengguna::insertGetId(array(
             'nama_user'=> $data['nama'],
             'email'=>$data['email'],
             'username'=>$data['username'],
-        
+        	'buktipembayaran'=>$filepath,
             'password'=> $pass
            
             ));
@@ -90,13 +121,40 @@ class HomeController extends controller{
 
             if (Auth::attempt($new,true))
             {
-                    //if(Auth::role()==1)
-                        // return 'asdf';
-             
-               
-                    //$id=Auth::user()->id;
+                    
+                $id=Auth::user()->id;
+
+				$timestamp= pengguna::select('dateregispaid')->where('id',$id)->first();
+
+				
+				$dateregispaid=  $timestamp['dateregispaid'];
+				if($dateregispaid!=NULL){
+
+					$datenow=date("Y-m-d");
+					$date1=date_create($dateregispaid);
+					$date2=date_create($datenow);
+					$time=date_diff($date1,$date2);
+					$expired=$time->format("%a");
+						
+
+					if ($expired=="30") {
+							 DB::table('user')->where('id', $id) ->update(['buktipembayaran' => '']);
+							 DB::table('user')->where('id', $id) ->update(['paidstatus' => '']);
+							    return redirect()->intended('dashboard');
+							
+					}
+					else{
+						   return redirect()->intended('dashboard');
+					}
+	                
+						
+				}
+				else{
+					   return redirect()->intended('dashboard');
+
+				}
+				
                 
-                   return redirect()->intended('dashboard');
                 //return 'asdfjhdsafasdf';
               
                    
@@ -106,7 +164,7 @@ class HomeController extends controller{
 
                 Session::flash('message','Login anda gagal, silahkan cek kembali username dan password');
                return redirect('/');
-                return 'login gagal';
+                
 
             } 
             // return redirect('loginadmin');
@@ -114,7 +172,13 @@ class HomeController extends controller{
 
         public function dashboard(){
        
-		$id=Auth::user()->id;
+
+
+
+                    $id=Auth::user()->id;
+
+
+
        	$data=array();
 		$json = file_get_contents('http://localhost:5000/getdatafileuser/'.$id);
 		$obj= json_decode($json,true);
@@ -140,6 +204,8 @@ class HomeController extends controller{
        
 		$id=Auth::user()->id;
        	$data=array();
+       	$iduser= pengguna::select('dateregispaid')->where('id',$id)->first();
+
 		$json = file_get_contents('http://localhost:5000/getdatasharedfileuser/'.$id);
 		$obj= json_decode($json,true);
 		//var_dump($obj);
@@ -156,7 +222,7 @@ class HomeController extends controller{
 			$i+=1;
 		}
 
-        	return view('dashboard')->with('nama', $data);
+        	return view('dashboard2')->with('nama', $data);
         }
 
         public function profil(){
@@ -266,9 +332,48 @@ class HomeController extends controller{
 
 		}	
 		
+		public function regispaid(){
+			return view('regispaid');
+		}
 		
-			
-    
+	public function updatebuktipembayaran(){
+		$data=input::all();
+		$id=$data['id'];
+		$timestamp=date("Y-m-d");
+		 DB::table('user')->where('id', $id) ->update(['paidstatus' => 1]);
+		  DB::table('user')->where('id', $id) ->update(['dateregispaid' => $timestamp]);
+
+		 	session::flash('gagal','sasa');
+		 return redirect('inihalamanadmin');
+	}
+ public function adminpage(){
+ 		$data=array();
+		$json = file_get_contents('http://localhost:5000/getUser');
+		$obj= json_decode($json,true);
+		//var_dump($obj);
+		$i = 0;
+		foreach ($obj['data'] as $key => $value) {
+			# code...
+			$data[$i]['id']=$value['id'];
+			$data[$i]['nama']=$value['nama_user'];
+			$data[$i]['email']=$value['email'];
+			$data[$i]['username']=$value['username'];
+			$data[$i]['paidstatus']=$value['paidstatus'];
+			$data[$i]['buktipembayaran']=$value['buktipembayaran'];
+
+		
+			$i+=1;
+		}
+
+
+ 	return view('admin/admin')->with('nama', $data);
+ }   
+      public function deleteuser($id){
       
+      	DB::table('user')->where('id','=',$id)->delete();
+      	session::flash('berhasil','sasa');
+      	return redirect('inihalamanadmin');
+
+      }
 
 }

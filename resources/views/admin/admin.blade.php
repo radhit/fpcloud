@@ -24,10 +24,10 @@
 
     <script type="text/javascript">
   function notifkeren(){
-  swal("Sukses", "Kontributor Berhasil Ditambahkan", "success")
+  swal("Sukses", "Pengguna Berhasil Dihapus", "success")
   }
     function notifkerengagal(){
-  swal("gagal", "Username yang anda masukan tidak terdaftar", "error")
+  swal("Sukses", "Valdiasi Berhasil", "success")
   }
   </script>
 
@@ -48,7 +48,7 @@
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>A</b>LT</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Docoline</b></span>
+          <span class="logo-lg"><b>Docoline</b> Administrator</span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -69,7 +69,7 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="hidden-xs">{{Auth::user()->username}}</span>
+                  <span class="hidden-xs">Administartor</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
@@ -95,20 +95,10 @@
             <li class="header">MAIN NAVIGATION</li>
             <li>
               <a href="{{URL::to('dashboard')}}">
-                <i class="fa fa-files-o"></i> <span>Dokumen</span>
+                <i class="fa fa-files-o"></i> <span>Daftar Pelanggan</span>
               </a>
             </li>
-             <li>
-              <a href="{{URL::to('sharedfile')}}">
-                <i class="fa fa-files-o"></i> <span>Dokumen Berbagi</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{URL::to('profile')}}">
-                <i class="fa fa-laptop"></i> <span>Profil</span>
-              </a>
-            </li>
-          </ul>
+             </ul>
         </section>
         <!-- /.sidebar -->
       </aside>
@@ -124,7 +114,7 @@
         <section class="content-header">
           <h1>
             Dashboard
-            <small>Version 2.0</small>
+            <small>Administrator</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -143,7 +133,7 @@
               <!-- TABLE: LATEST ORDERS -->
               <div class="box box-info">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Dokumen Berbagi</h3>
+                  <h3 class="box-title">Dokumen</h3>
                   <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   </div>
@@ -153,25 +143,43 @@
                     <table class="table no-margin">
                       <thead>
                         <tr>
-                          <th>ID Dokumen</th>
-                          <th>Nama Dokumen</th>
-                          <th>Terakhir edit</th>
-                          <th>Edit</th>
-                          <th>Tambah Kontributor</th>
-                          
+                          <th>Nama User</th>
+                          <th>Username</th>
+                          <th>Email</th>
+                          <th>Status Pengguna</th>
+                          <th>Bukti Pembayaran</th>
+                          <th>Validasi Pembayaran</th>
+                          <th>Hapus</th>
 
                         </tr>
                       </thead>
                       <tbody>
                       @foreach($nama as $key)
+                      <?php $buktipembayaran=$key['buktipembayaran']; $paidstatus=$key['paidstatus'];?>
                         <tr>
-                          <td>{{$key['id']}}</td>
-                          <td>{{$key['judul']}}</td>
-                          <td>{{$key['timestamp']}}</td>
+                          <td>{{$key['nama']}}</td>
+                          <td>{{$key['username']}}</td>
+                          <td>{{$key['email']}}</td>
+                          <td>@if($paidstatus==NULL) 
+                              Free User 
+                              @else 
+                              Paid User 
+                              @endif
+                          </td>
                           <?php $id=$key['id'];?>
-                          <td><a href="{{URL::to('editdokumen')}}/{{$key['id']}}" class="btn btn-warning" style="margin-left:1%">EDIT DOKUMEN</a></td>
-                          <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahkontributor{{$id}}" data-id="{{$id}}">Tambah Kontributor</button></td>
-                        
+                          <td>@if ($buktipembayaran!=NULL) <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahkontributor{{$id}}" data-id="{{$id}}">Bukti Pembayaran</button> @else Tidak ada bukti Pembayaran @endif</td>
+                          <td>
+                                @if($paidstatus==NULL)
+                               <form action="{{URL::to('updatepembayaran')}}" method="POST">
+                               <input type="hidden" value="{{$key['id']}}" name="id">
+                               {{csrf_field()}}
+                              <button type="submit" class="btn btn-warning" style="margin-left:1%">Validasi</button>
+                              </form>
+                              @else
+                              Tervalidasi
+                              @endif
+                              </td>
+                          <td><a href="{{URL::to('deleteuser')}}/{{$key['id']}}" class="btn btn-danger" style="margin-left:1%">HAPUS PENGGUNA</a></td>
                         </tr>
 
                      @endforeach
@@ -181,46 +189,35 @@
                 </div><!-- /.box-body -->
                 <div class="box-footer clearfix nav nav-tabs">
                
-                  
-                </div><!-- /.box-footer -->
+                 </div><!-- /.box-footer -->
               </div><!-- /.box -->
             </div><!-- /.col -->
           </div><!-- /.row -->
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
-   
 
-   @foreach($nama as $key)
-   <div id="tambahkontributor{{$key['id']}}" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-
-    <div class="modal-content">
-      <div class="modal-header"  style="text-align:center">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Tambah Kontributor</h4>
-      </div>
-      <div class="modal-body">
-   <form action="{{URL::to('tambahkontributor')}}" method="POST">
-        <div class="form-group">
-          <input name="kontributor" type="text" placeholder="Masukan username kontributor" class="form-control">
+   @foreach($nama as $post)
+   <?php $bukti=$post['buktipembayaran'];?>
+  <div id="tambahkontributor{{$post['id']}}" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">BUKTI PEMBAYARAN</h4>
+            </div>
+            <div class="modal-body">
+              <h5 style="font-weight:bold;border-bottom:2px solid #E5E5E5;"><?php echo $post['nama']; ?></h5>
+             <img src="{{URL::to($bukti)}}" width="100% ">
+             
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
-        </div>
-      <div class="modal-footer">
-      <input type="hidden" value="{{$key['id']}}" name="idfile">
-      {{csrf_field()}}
-       <button type="submit" class="btn btn-primary">Tambahkan</button>
-      
-      
-      </form>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>
+      </div>      
 @endforeach
 
       <!-- Control Sidebar -->
@@ -254,4 +251,3 @@
     <script src="dist/js/demo.js"></script>
   </body>
 </html>
-

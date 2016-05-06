@@ -28,17 +28,18 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+ </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
       <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="index_dashboard.php" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>A</b>LT</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Admin</b>LTE</span>
+          <span class="logo-lg"><b>Docoline</b></span>
         </a>
 
         <!-- Header Navbar: style can be found in header.less -->
@@ -59,14 +60,14 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span class="hidden-xs">Username</span>
+                  <span class="hidden-xs">{{Auth::user()->username}}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="{{URL::to('logout')}}" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -80,26 +81,21 @@
       <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-          <!-- search form -->
-          <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-              <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span>
-            </div>
-          </form>
-          <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li>
-              <a href="index.php">
+              <a href="{{URL::to('dashboard')}}">
                 <i class="fa fa-files-o"></i> <span>Dokumen</span>
               </a>
             </li>
+             <li>
+              <a href="{{URL::to('sharedfile')}}">
+                <i class="fa fa-files-o"></i> <span>Dokumen Berbagi</span>
+              </a>
+            </li>
             <li>
-              <a href="profil.php">
+              <a href="{{URL::to('profile')}}">
                 <i class="fa fa-laptop"></i> <span>Profil</span>
               </a>
             </li>
@@ -107,15 +103,26 @@
         </section>
         <!-- /.sidebar -->
       </aside>
-
+  @if (Session::has('berhasil'))
+        <script type="text/javascript">notifkeren();</script>
+    
+    @elseif (Session::has('gagal'))
+        <script type="text/javascript">notifkerengagal();</script>
+    @endif
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Edit Dokumen
+            Kelola Dokumen
+            <small>Docoline</small>
           </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Dashboard</li>
+          </ol>
         </section>
+
 
         <!-- Main content -->
         <section class="content">

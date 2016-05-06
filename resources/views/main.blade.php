@@ -170,7 +170,7 @@
                         /bulan
                       </li>
                       <li class="ptop10">
-                        Unlimited Dokumen
+                        Dokumen yang tidak terbatas
                       </li>
                       <li>
                         24 / 7 Full Support
@@ -179,10 +179,10 @@
                         Cloud Backup
                       </li>
                       <li class="last border-none pbottom40">
-                        Free Trials
+                        Bebas Berbagi Dokumen
                       </li>
                       <li class="sing-up">
-                        <a href="{{URL::to('daftar')}}" class="animate">Daftar</a>
+                        <a href="{{URL::to('regispaid')}}" class="animate">Daftar</a>
                       </li>
                     </ul>
                   </div><!-- end pricing-box -->
