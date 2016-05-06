@@ -23,7 +23,7 @@ class HomeController extends controller{
 
 	public function get(){
 		$data=array();
-		$json = file_get_contents('http://localhost:5000/getUser');
+		$json = file_get_contents('http://10.151.36.100:5000/getUser');
 		$obj= json_decode($json,true);
 		//var_dump($obj);
 		$i = 0;
@@ -182,7 +182,7 @@ class HomeController extends controller{
        	$data=array();
 
 
-		$json = file_get_contents('http://localhost:5000/getdatafileuser/'.$id);
+		$json = file_get_contents('http://10.151.36.100:5000/getdatafileuser/'.$id);
 		$obj= json_decode($json,true);
 		//var_dump($obj);
 		$i = 0;
@@ -212,7 +212,7 @@ class HomeController extends controller{
        	$data=array();
        	$iduser= pengguna::select('dateregispaid')->where('id',$id)->first();
 
-		$json = file_get_contents('http://localhost:5000/getdatasharedfileuser/'.$id);
+		$json = file_get_contents('http://10.151.36.100:5000/getdatasharedfileuser/'.$id);
 		$obj= json_decode($json,true);
 		//var_dump($obj);
 		$i = 0;
@@ -235,7 +235,7 @@ class HomeController extends controller{
         public function profil(){
         $id=Auth::user()->id;
        	$data=array();
-		$json = file_get_contents('http://localhost:5000/getdatauser/'.$id);
+		$json = file_get_contents('http://10.151.36.100:5000/getdatauser/'.$id);
 		$obj= json_decode($json,true);
 		//var_dump($obj);
 		$i = 0;

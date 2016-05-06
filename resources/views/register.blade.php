@@ -35,7 +35,7 @@
 			DAFTAR
 		</div>
 		<div class="login-form">
-			<form action="http://localhost:5000/Register" method="POST">
+			<form action="http://10.151.36.100:5000/Register" method="POST">
 				<div class="form-group">
                     <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap">
                 </div>

@@ -211,7 +211,7 @@
 
       @if(($jumlah<5 && $status==NULL)  || $status!=NULL )
 
-   <form action="http://localhost:5000/tambahdokumen" method="POST">
+   <form action="http://10.151.36.100:5000/tambahdokumen" method="POST">
         <div class="form-group">
           <input name="judul" type="text" placeholder="Judul Dokumen" class="form-control">
         </div>
