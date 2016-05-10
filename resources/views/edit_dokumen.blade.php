@@ -20,6 +20,14 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{URL::to ('dist/css/skins/_all-skins.min.css')}}">
     <script type="text/javascript" src="{{URL::to ('ckeditor/ckeditor.js')}}"></script>
+     <script src="{{URL::to ('swal/dist/sweetalert.min.js')}}"></script> 
+    <link rel="stylesheet" type="text/css" href="{{URL::to ('swal/dist/sweetalert.css')}}">
+
+  <script type="text/javascript">
+  function notifkeren(){
+  swal("Sukses", "Dokumen berhasil disimpan", "success")
+  }
+  </script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -103,7 +111,7 @@
         </section>
         <!-- /.sidebar -->
       </aside>
-  @if (Session::has('berhasil'))
+  @if (Session::has('berhasilsave'))
         <script type="text/javascript">notifkeren();</script>
     
     @elseif (Session::has('gagal'))
@@ -151,7 +159,7 @@
                    <input type="hidden" value="{{$key->judul}}" name="username">
                   
                    {{csrf_field()}}
-                <button type="submit" class="btn btn-sm btn-success btn-flat pull-right">Download</button>
+                <button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">Download</button>
                 </form>
                @endforeach
               

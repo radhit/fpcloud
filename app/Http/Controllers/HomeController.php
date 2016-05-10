@@ -328,8 +328,8 @@ class HomeController extends controller{
 	    	$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 			$objWriter->save('dokumen/'.$nama.'.docx');
 			//dd($data['editor'] );
-			
-             return redirect('dashboard');
+				session::flash("berhasilsave","xxxx");
+             return redirect('editdokumen/'.$id);
         }
     
     public function save(){
