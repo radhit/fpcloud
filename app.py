@@ -1,6 +1,6 @@
 import json
 import os
-from flask import Flask, request, redirect, jsonify
+from flask import Flask, request, redirect, jsonify,flash
 
 import MySQLdb
 import MySQLdb.cursors
@@ -12,13 +12,14 @@ from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
+app.secret_key = 'risha zahra'
 
 
 @app.route("/getUser", methods=['GET'])
 def gettuser():
 	db = MySQLdb.connect("localhost", "root", "","docoline",cursorclass=MySQLdb.cursors.DictCursor)
 	cur = db.cursor()
-	query = "SELECT nama_user,email,username,paidstatus,buktipembayaran,id from user"
+	query = "SELECT nama_user,email,username,paidstatus,buktipembayaran,id from user where role=0"
 	cur.execute(query)
 	return jsonify(data=cur.fetchall())
 
@@ -38,14 +39,35 @@ def register():
        
            cur.execute("""INSERT INTO user (nama_user,password,email,username,dateregispaid) VALUES(%s,%s,%s,%s,%s)""", (nama,passok,email,username,st))
            db.commit()
+           flash('Register Berhasil')
            return redirect("http://localhost/fpcloud/public/login",code=302)
+
+@app.route("/Registeradmin",methods=['POST'])
+def registeradmin():
+           db = MySQLdb.connect("localhost", "root", "","docoline")
+           cur = db.cursor()
+        
+           username=request.form['username']
+           password=request.form['password']
+           role=1
+           passbc=bcrypt.generate_password_hash(password,10)
+           passok=passbc.replace("$2b$","$2y$")
+           xx=time.time()
+           st = datetime.datetime.fromtimestamp(xx).strftime('%Y-%m-%d')
+         
+       
+           cur.execute("""INSERT INTO user (username,password,role) VALUES(%s,%s,%s)""", (username,passok,role))
+           db.commit()
+           flash('Register Berhasil')
+           return redirect("http://localhost/fpcloud/public/login",code=302)
+
 
         
 @app.route("/getdatauser/<int:id>",methods=["get"])
 def getData(id):
          db = MySQLdb.connect("localhost", "root", "","docoline",cursorclass=MySQLdb.cursors.DictCursor)
          cur = db.cursor()
-         query = "SELECT * from user where id=%d" %id
+         query = "SELECT nama_user,password,email,username,paidstatus,buktipembayaran from user where id=%d" %id
          cur.execute(query)
          return jsonify(data=cur.fetchall())
 

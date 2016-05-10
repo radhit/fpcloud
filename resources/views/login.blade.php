@@ -23,10 +23,28 @@
     <link rel="stylesheet" type="text/css" href="{{URL::to ('css/owl.carousel.css')}}"> 
     <link rel="stylesheet" type="text/css" href="{{URL::to ('css/owl.transitions.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::to ('css/owl.theme.css')}}">
+     <script src="{{URL::to ('swal/dist/sweetalert.min.js')}}"></script> 
+	 <link rel="stylesheet" type="text/css" href="{{URL::to ('swal/dist/sweetalert.css')}}">
 
+    <script type="text/javascript">
+  function notifkeren(){
+  swal("Gagal", "Silahkan periksa kembali password dan username anda", "error")
+  }
+  </script>
     <link rel="stylesheet" type="text/css" href="{{URL::to ('style.css')}}">
 </head>
 <body>
+ @if (Session::has('message'))
+        <script type="text/javascript">notifkeren();</script>
+ @endif
+
+  {% with messages = get_flashed_messages() %}
+         {% if messages %}
+             {% for message in messages %}
+             <script> swal("Berhasil","Register Berhasil","success");</script>
+             {% endfor %}
+            {% endif %}
+      {% endwith %}
 	<div class="name-hero">
 		DOCOLINE
 	</div>

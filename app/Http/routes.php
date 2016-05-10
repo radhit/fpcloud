@@ -37,4 +37,7 @@ Route::post('registerpaid','HomeController@registerpaid');
 Route::get('inihalamanadmin','HomeController@adminpage');
 Route::post('updatepembayaran','HomeController@updatebuktipembayaran');
 Route::get('deleteuser/{id}','HomeController@deleteuser');
+Route::get('deletefile/{id}','HomeController@deletefile');
+
 Route::post('keloladokumen','HomeController@keloladokumen');
+route::get('inihalamanuntukdaftaradmin','HomeController@admin');

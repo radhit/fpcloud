@@ -123,10 +123,13 @@ class HomeController extends controller{
             {
                     
                 $id=Auth::user()->id;
-
+                $role=Auth::user()->role;
 				$timestamp= pengguna::select('dateregispaid')->where('id',$id)->first();
 
-				
+				 if($role==1){
+					 return redirect()->intended('inihalamanadmin');
+
+				}
 				$dateregispaid=  $timestamp['dateregispaid'];
 				if($dateregispaid!=NULL){
 
@@ -149,6 +152,8 @@ class HomeController extends controller{
 	                
 						
 				}
+			
+
 				else{
 					   return redirect()->intended('dashboard');
 
@@ -163,7 +168,7 @@ class HomeController extends controller{
             else{
 
                 Session::flash('message','Login anda gagal, silahkan cek kembali username dan password');
-               return redirect('/');
+               return redirect('login');
                 
 
             } 
@@ -172,7 +177,7 @@ class HomeController extends controller{
 
       public function dashboard(){
        
-
+      	 	if(Auth::check()){
 
 
                     $id=Auth::user()->id;
@@ -204,10 +209,13 @@ class HomeController extends controller{
 			//echo $paiduser;
         	return view('dashboard')->with('nama', $data)->with('jumlah',$count)->with('status',$paiduser);
         }
+        else
+        	return redirect("/");
+        }
 
 
         public function dashboard2(){
-       
+       	if(Auth::check()){
 		$id=Auth::user()->id;
        	$data=array();
        	$iduser= pengguna::select('dateregispaid')->where('id',$id)->first();
@@ -231,8 +239,12 @@ class HomeController extends controller{
 
         	return view('dashboard2')->with('nama', $data);
         }
+        else
+        	return redirect("/");
+        }
 
         public function profil(){
+       if(Auth::check()){
         $id=Auth::user()->id;
        	$data=array();
 		$json = file_get_contents('http://localhost:5000/getdatauser/'.$id);
@@ -253,11 +265,27 @@ class HomeController extends controller{
 
 
 		return view('profil')->with('nama', $data);
+		  }
+        else
+        	return redirect("/");
   //       	return view('profil');
         }
 
         public function update(){
         	$data=Input::all();
+        	  $file = array_get($data,'pembayaran');
+           // SET UPLOAD PATH
+            $destinationPath = 'buktipembayaran';
+            // GET THE FILE EXTENSION
+            $extension = $file->getClientOriginalExtension();
+            $nama= $file->getClientOriginalName();
+
+            // RENAME THE UPLOAD WITH RANDOM NUMBER
+            $fileName = $nama; 
+            // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY
+            $upload_success = $file->move($destinationPath, $fileName);
+            $filepath = $destinationPath . '/' . $nama;
+
         	$password=bcrypt($data['password']);
         	 $id=Auth::user()->id;
         	 DB::table('user')->where('id', $id) ->update(['nama_user' => $data['nama']]);
@@ -265,6 +293,7 @@ class HomeController extends controller{
               DB::table('user')->where('id', $id) ->update(['username' => $data['username']]);
                DB::table('user')->where('id', $id) ->update(['paidstatus' => $data['status']]);
                DB::table('user')->where('id', $id)  ->update(['email' => $data['email']]);
+                  DB::table('user')->where('id', $id)  ->update(['buktipembayaran' => $filepath]);
 
                 return redirect('profile');
 
@@ -273,9 +302,13 @@ class HomeController extends controller{
         }
 
         public function edit($id){
+        		if(Auth::check()){
         	$data=array();
         	 DB::table('file')->where('id', $id) ->update(['flag' => 1]);
         	$data['konten']=file::where('id','=',$id)->get();
+        	}
+        else
+        	return redirect("/");
         	return view('edit_dokumen',$data);
         }
         public function updatekonten(){
@@ -303,6 +336,7 @@ class HomeController extends controller{
     	$data=Input::all();
     	$nama=$data['username'];
     	$judul=$nama.'.docx';
+    	
     	 $file = public_path()."/dokumen/".$judul;
    		 $headers = array('Content-Type' => ' docx');
 
@@ -355,6 +389,9 @@ class HomeController extends controller{
 		 return redirect('inihalamanadmin');
 	}
  public function adminpage(){
+ 	if(Auth::check()){
+ 		if(Auth::user()->role==1){
+
  		$data=array();
 		$json = file_get_contents('http://localhost:5000/getUser');
 		$obj= json_decode($json,true);
@@ -374,13 +411,26 @@ class HomeController extends controller{
 		}
 
 
- 	return view('admin/admin')->with('nama', $data);
+ 		return view('admin/admin')->with('nama', $data);
+ 		}
+ 		else 
+ 			return redirect("/");
+ 	}
+ 	else 
+ 			return redirect("/");
  }   
       public function deleteuser($id){
       
       	DB::table('user')->where('id','=',$id)->delete();
       	session::flash('berhasil','sasa');
       	return redirect('inihalamanadmin');
+
+      }
+      public function deletefile($id){
+      
+      	DB::table('file')->where('id','=',$id)->delete();
+      	session::flash('berhasildelete','sasa');
+      	return redirect('dashboard');
 
       }
 
@@ -400,6 +450,10 @@ class HomeController extends controller{
 
 
 
+      }
+
+      public function admin(){
+      	return view ('admin/register');
       }
 
 }

@@ -151,20 +151,13 @@
                         <input type="text" class="form-control" id="inputEmail3" name="username" value="{{$key['username']}}">
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                      <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword3"  name="password" placeholder="Password">
-                      </div>
-                    </div>
-              
+                  
                       <div class="form-group">
-                      <label for="inputEmail3" class="col-sm-2 control-label">Status Pengguna</label>
+                      <label for="inputEmail3" class="col-sm-2 control-label">Bukti Pembayaran</label>
                         <div class="col-sm-10">
-                          <select class="form-control" name="status">
-                            <option value="0">Free</option>
-                            <option value="1">Paid</option>
-                          </select>
+                             
+                    <input type="file" class="form-control" name="pembayaran" placeholder="Bukti Pembayaran">
+                
                         </div>
                       </div>
                       

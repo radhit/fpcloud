@@ -26,6 +26,9 @@
   function notifkeren(){
   swal("Sukses", "Kontributor Berhasil Ditambahkan", "success")
   }
+   function notifkeren2(){
+  swal("Sukses", "file berhasil dihapus", "success")
+  }
     function notifkerengagal(){
   swal("gagal", "Username yang anda masukan tidak terdaftar", "error")
   }
@@ -114,6 +117,9 @@
       </aside>
   @if (Session::has('berhasil'))
         <script type="text/javascript">notifkeren();</script>
+   @elseif (Session::has('berhasildelete'))
+        <script type="text/javascript">notifkeren2();</script>
+    
     
     @elseif (Session::has('gagal'))
         <script type="text/javascript">notifkerengagal();</script>
@@ -180,7 +186,7 @@
                             @endif
                           </td>
                           <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahkontributor{{$id}}" data-id="{{$id}}">Tambah Kontributor</button></td>
-                          <td><a href="hapus_dokumen.php" class="btn btn-danger" style="margin-left:1%">HAPUS DOKUMEN</a></td>
+                          <td><a href="{{URL::to('deletefile')}}/{{$key['id']}}" class="btn btn-danger" style="margin-left:1%">HAPUS DOKUMEN</a></td>
                         </tr>
 
                      @endforeach
