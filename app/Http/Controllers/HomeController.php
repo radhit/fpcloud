@@ -393,7 +393,7 @@ class HomeController extends controller{
  		if(Auth::user()->role==1){
 
  		$data=array();
-		$json = file_get_contents('http://localhost:5000/getUser');
+		$json = file_get_contents('http://10.151.36.100:5000/getUser');
 		$obj= json_decode($json,true);
 		//var_dump($obj);
 		$i = 0;
