@@ -17,6 +17,8 @@
 
     <!-- font awesome-->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link href="{{URL::to('css/font-awesome.min.css')}}" rel="stylesheet"> -->
+    <script src="{{URL::to('js/jquery.min.js')}}"></script>
     <link rel="stylesheet" href="{{URL::to ('css/skillset.css')}}">
 
 
@@ -38,13 +40,6 @@
         <script type="text/javascript">notifkeren();</script>
  @endif
 
-  {% with messages = get_flashed_messages() %}
-         {% if messages %}
-             {% for message in messages %}
-             <script> swal("Berhasil","Register Berhasil","success");</script>
-             {% endfor %}
-            {% endif %}
-      {% endwith %}
 	<div class="name-hero">
 		DOCOLINE
 	</div>

@@ -42,14 +42,13 @@ def register():
 
           
            flash('Register Berhasil')     
-           return redirect("http://10.151.36.100:8080/login",code=302)
+           return redirect("http://10.151.36.100/login",code=302)
 
 
 @app.route("/Registeradmin",methods=['POST'])
 def registeradmin():
-           db = MySQLdb.connect("localhost", "root", "","docoline")
-           cur = db.cursor()
-        
+           db = MySQLdb.connect("localhost", "root", "root","docoline")
+           cur = db.cursor()        
            username=request.form['username']
            password=request.form['password']
            role=1
@@ -62,7 +61,7 @@ def registeradmin():
            cur.execute("""INSERT INTO user (username,password,role) VALUES(%s,%s,%s)""", (username,passok,role))
            db.commit()
            flash('Register Berhasil')
-           return redirect("http://localhost/fpcloud/public/login",code=302)
+           return redirect("http://10.151.36.100/login",code=302)
 
 
         
@@ -89,7 +88,7 @@ def update(id):
        
         cur.execute("""UPDATE user SET nama_user=%s, password=%s, email=%s, username=%s,paidstatus=%s where id=%d) """, (nama,passok,email,username,status))%id
         db.commit()
-        return redirect("http://10.151.36.100:8080/profil",code=302)
+        return redirect("http://10.151.36.100/profil",code=302)
         
 @app.route("/tambahdokumen",methods=["POST"])
 def tambahdokumen():
@@ -102,7 +101,7 @@ def tambahdokumen():
         st = datetime.datetime.fromtimestamp(xx).strftime('%Y-%m-%d %H:%M:%S')
         cur.execute("""INSERT INTO file (author,password,judul,timestamp) VALUES(%s,%s,%s,%s)""", (author,password,judul,st))
         db.commit()
-        return redirect("http://10.151.36.100:8080/dashboard",code=302)
+        return redirect("http://10.151.36.100/dashboard",code=302)
 
 
         

@@ -17,6 +17,8 @@
 
     <!-- font awesome-->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link href="{{URL::to('css/font-awesome.min.css')}}" rel="stylesheet"> -->
+    <script src="{{URL::to('js/jquery.min.js')}}"></script>
     <link rel="stylesheet" href="css/skillset.css">
 
 
@@ -35,7 +37,7 @@
 			DAFTAR
 		</div>
 		<div class="login-form">
-			<form action="http://localhost:5000/Registeradmin" method="POST">
+			<form action="http://10.151.36.100:5000/Registeradmin" method="POST">
 				
                 <div class="form-group">
                     <input type="text" class="form-control" name="username" placeholder="Username">

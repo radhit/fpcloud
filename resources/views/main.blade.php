@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DOCOLINE</title>
 
-    <!--Google web fonts-->
+    <!--Google web fonts-->   
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,300italic,400italic,600,700,600italic,200,200italic' rel='stylesheet' type='text/css'>    
     <link href='http://fonts.googleapis.com/css?family=Play:400,700' rel='stylesheet' type='text/css'>
     
@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/animate.css">
 
     <!-- font awesome-->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/skillset.css">
 
 
@@ -24,6 +24,8 @@
     <link rel="stylesheet" type="text/css" href="css/owl.theme.css">
 
     <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="{{URL::to('js/jquery.min.js')}}"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
