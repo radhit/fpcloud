@@ -1,6 +1,6 @@
 import json
 import os
-from flask import Flask, request, redirect, jsonify
+from flask import Flask, request, redirect, jsonify,flash
 
 import MySQLdb
 import MySQLdb.cursors
@@ -12,19 +12,20 @@ from flask.ext.bcrypt import Bcrypt
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
+app.secret_key = 'risha zahra'
 
 
 @app.route("/getUser", methods=['GET'])
 def gettuser():
-	db = MySQLdb.connect("localhost", "root", "root","docoline",cursorclass=MySQLdb.cursors.DictCursor)
+	db = MySQLdb.connect("localhost", "root", "","docoline",cursorclass=MySQLdb.cursors.DictCursor)
 	cur = db.cursor()
-	query = "SELECT nama_user,email,username,paidstatus,buktipembayaran,id from user"
+	query = "SELECT nama_user,email,username,paidstatus,buktipembayaran,id from user where role=0"
 	cur.execute(query)
 	return jsonify(data=cur.fetchall())
 
 @app.route("/Register",methods=['POST'])
 def register():
-           db = MySQLdb.connect("localhost", "root", "root","docoline")
+           db = MySQLdb.connect("localhost", "root", "","docoline")
            cur = db.cursor()
            nama=request.form['nama']
            email=request.form['email']
@@ -38,20 +39,43 @@ def register():
        
            cur.execute("""INSERT INTO user (nama_user,password,email,username,dateregispaid) VALUES(%s,%s,%s,%s,%s)""", (nama,passok,email,username,st))
            db.commit()
-           return redirect("http://10.151.36.100/login",code=302)
+
+          
+           flash('Register Berhasil')     
+           return redirect("http://localhost/backupcloud2/public/login",code=302)
+
+
+@app.route("/Registeradmin",methods=['POST'])
+def registeradmin():
+           db = MySQLdb.connect("localhost", "root", "","docoline")
+           cur = db.cursor()        
+           username=request.form['username']
+           password=request.form['password']
+           role=1
+           passbc=bcrypt.generate_password_hash(password,10)
+           passok=passbc.replace("$2b$","$2y$")
+           xx=time.time()
+           st = datetime.datetime.fromtimestamp(xx).strftime('%Y-%m-%d')
+         
+       
+           cur.execute("""INSERT INTO user (username,password,role) VALUES(%s,%s,%s)""", (username,passok,role))
+           db.commit()
+           flash('Register Berhasil')
+           return redirect("http://localhost/backupcloud2/public/login",code=302)
+
 
         
 @app.route("/getdatauser/<int:id>",methods=["get"])
 def getData(id):
-         db = MySQLdb.connect("localhost", "root", "root","docoline",cursorclass=MySQLdb.cursors.DictCursor)
+         db = MySQLdb.connect("localhost", "root", "","docoline",cursorclass=MySQLdb.cursors.DictCursor)
          cur = db.cursor()
-         query = "SELECT * from user where id=%d" %id
+         query = "SELECT nama_user,password,email,username,paidstatus,buktipembayaran from user where id=%d" %id
          cur.execute(query)
          return jsonify(data=cur.fetchall())
 
 @app.route("/updateuser/<int:id>",methods=['POST'])
 def update(id):
-        db = MySQLdb.connect("localhost", "root", "root","docoline")
+        db = MySQLdb.connect("localhost", "root", "","docoline")
         cur = db.cursor()
         nama=request.form['nama']
         email=request.form['email']
@@ -64,11 +88,11 @@ def update(id):
        
         cur.execute("""UPDATE user SET nama_user=%s, password=%s, email=%s, username=%s,paidstatus=%s where id=%d) """, (nama,passok,email,username,status))%id
         db.commit()
-        return redirect("http://10.151.36.100/profil",code=302)
+        return redirect("http://localhost/backupcloud2/public/profil",code=302)
         
 @app.route("/tambahdokumen",methods=["POST"])
 def tambahdokumen():
-        db = MySQLdb.connect("localhost", "root", "root","docoline")
+        db = MySQLdb.connect("localhost", "root", "","docoline")
         cur = db.cursor()
         judul=request.form['judul']
         password=request.form['password']
@@ -77,13 +101,13 @@ def tambahdokumen():
         st = datetime.datetime.fromtimestamp(xx).strftime('%Y-%m-%d %H:%M:%S')
         cur.execute("""INSERT INTO file (author,password,judul,timestamp) VALUES(%s,%s,%s,%s)""", (author,password,judul,st))
         db.commit()
-        return redirect("http://10.151.36.100/dashboard",code=302)
+        return redirect("http://localhost/backupcloud2/public/dashboard",code=302)
 
 
         
 @app.route("/getdatafileuser/<int:id>",methods=["get"])
 def getDatafile(id):
-         db = MySQLdb.connect("localhost", "root", "root","docoline",cursorclass=MySQLdb.cursors.DictCursor)
+         db = MySQLdb.connect("localhost", "root", "","docoline",cursorclass=MySQLdb.cursors.DictCursor)
          cur = db.cursor()
          query = "SELECT * from file where author=%d" %id
          cur.execute(query)
@@ -91,7 +115,7 @@ def getDatafile(id):
         
 @app.route("/getdatasharedfileuser/<int:id>",methods=["get"])
 def getDatasharedfile(id):
-         db = MySQLdb.connect("localhost", "root", "root","docoline",cursorclass=MySQLdb.cursors.DictCursor)
+         db = MySQLdb.connect("localhost", "root", "","docoline",cursorclass=MySQLdb.cursors.DictCursor)
          cur = db.cursor()
          query = "SELECT * from file,kontributor where file.id=kontributor.id_file and kontributor.id_user=%d" %id
          cur.execute(query)

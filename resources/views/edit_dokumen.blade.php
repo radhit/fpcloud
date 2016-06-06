@@ -3,13 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Dashboard</title>
+    <title>Docoline | Edit Dokumen</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{{URL::to ('bootstrap/css/bootstrap.min.css')}}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- <link href="{{URL::to('css/font-awesome.min.css')}}" rel="stylesheet"> -->
+    <script src="{{URL::to('js/jquery.min.js')}}"></script>
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- jvectormap -->
@@ -20,6 +22,14 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{URL::to ('dist/css/skins/_all-skins.min.css')}}">
     <script type="text/javascript" src="{{URL::to ('ckeditor/ckeditor.js')}}"></script>
+     <script src="{{URL::to ('swal/dist/sweetalert.min.js')}}"></script> 
+    <link rel="stylesheet" type="text/css" href="{{URL::to ('swal/dist/sweetalert.css')}}">
+
+  <script type="text/javascript">
+  function notifkeren(){
+  swal("Sukses", "Dokumen berhasil disimpan", "success")
+  }
+  </script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -103,7 +113,7 @@
         </section>
         <!-- /.sidebar -->
       </aside>
-  @if (Session::has('berhasil'))
+  @if (Session::has('berhasilsave'))
         <script type="text/javascript">notifkeren();</script>
     
     @elseif (Session::has('gagal'))
@@ -145,13 +155,14 @@
                   {{csrf_field()}}
                   <input type="hidden" value="{{$key->id}}" name="id">
                    <input type="hidden" value="{{$key->judul}}" name="username">
+                      <input type="hidden" value="0" name="flag">
                 <button type="submit" class="btn btn-sm btn-success btn-flat pull-right">Simpan</button>
                </form>
                 <form action="{{URL::to('savefile')}}" method="post" enctype="multipart/form-data">
                    <input type="hidden" value="{{$key->judul}}" name="username">
                   
                    {{csrf_field()}}
-                <button type="submit" class="btn btn-sm btn-success btn-flat pull-right">Download</button>
+                <button type="submit" class="btn btn-sm btn-warning btn-flat pull-right">Download</button>
                 </form>
                @endforeach
               

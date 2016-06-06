@@ -17,16 +17,29 @@
 
     <!-- font awesome-->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link href="{{URL::to('css/font-awesome.min.css')}}" rel="stylesheet"> -->
+    <script src="{{URL::to('js/jquery.min.js')}}"></script>
     <link rel="stylesheet" href="{{URL::to ('css/skillset.css')}}">
 
 
     <link rel="stylesheet" type="text/css" href="{{URL::to ('css/owl.carousel.css')}}"> 
     <link rel="stylesheet" type="text/css" href="{{URL::to ('css/owl.transitions.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::to ('css/owl.theme.css')}}">
+     <script src="{{URL::to ('swal/dist/sweetalert.min.js')}}"></script> 
+	 <link rel="stylesheet" type="text/css" href="{{URL::to ('swal/dist/sweetalert.css')}}">
 
+    <script type="text/javascript">
+  function notifkeren(){
+  swal("Gagal", "Silahkan periksa kembali password dan username anda", "error")
+  }
+  </script>
     <link rel="stylesheet" type="text/css" href="{{URL::to ('style.css')}}">
 </head>
 <body>
+ @if (Session::has('message'))
+        <script type="text/javascript">notifkeren();</script>
+ @endif
+
 	<div class="name-hero">
 		DOCOLINE
 	</div>

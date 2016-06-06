@@ -6,24 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DOCOLINE</title>
 
-    <!--Google web fonts-->
+    <!--Google web fonts-->   
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,300,300italic,400italic,600,700,600italic,200,200italic' rel='stylesheet' type='text/css'>    
     <link href='http://fonts.googleapis.com/css?family=Play:400,700' rel='stylesheet' type='text/css'>
     
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/animate.css">
-
+    <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
     <!-- font awesome-->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/skillset.css">
 
 
     <link rel="stylesheet" type="text/css" href="css/owl.carousel.css"> 
-    <link rel="stylesheet" type="text/css" href="css/owl.transitions.css">
+    <!-- <link rel="stylesheet" type="text/css" href="css/owl.transitions.css"> -->
     <link rel="stylesheet" type="text/css" href="css/owl.theme.css">
 
     <link rel="stylesheet" type="text/css" href="style.css">
+
+    <script src="{{URL::to('js/jquery.min.js')}}"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -58,18 +60,20 @@
 
 <div class="carousel fade-carousel slide" data-ride="carousel" data-interval="2000" id="bs-carousel">
   <!-- Overlay -->
-  <div class="overlay"></div>
   
   <!-- Wrapper for slides -->
   <div class="carousel-inner">
     <div class="item slides active">
       <div class="slide-1"></div>
-      <div class="hero">
-        <hgroup>
-            <h1><span>Docoline</span></h1>        
-            <h3>Buat dokumen baru anda sekarang!</h3>
-        </hgroup>
-        <button class="btn btn-hero btn-lg" role="button">Mulai sekarang</button>
+
+      <div class="back">
+        <div class="hero">
+          <hgroup>
+              <h1><span>Docoline</span></h1>        
+              <h3>Buat dokumen baru anda sekarang!</h3>
+          </hgroup>
+          <button class="btn btn-hero btn-lg" role="button">Mulai sekarang</button>
+        </div>
       </div>
     </div>
 
@@ -117,7 +121,7 @@
   <div class="container">
     <div class="row">
       <div class="getit_section">
-        <h1>Promosiin Docoline. Ga ada kata-kata yang meyakinkan.</h1>
+        <h1>Docoline</h1>
       </div>  
     </div>
   </div>

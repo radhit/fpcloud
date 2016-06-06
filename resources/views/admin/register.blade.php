@@ -34,16 +34,11 @@
 	</div>
 	<div class="login">
 		<div class="login-header">
-			DAFTAR
+			DAFTAR ADMINISTRATOR
 		</div>
 		<div class="login-form">
-			<form action="http://localhost:5000/Register" method="POST">
-				<div class="form-group">
-                    <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap">
-                </div>
-                <div class="form-group">
-                    <input type="email" class="form-control" name="email" placeholder="Email">
-                </div>
+			<form action="http://localhost:5000/Registeradmin" method="POST">
+				
                 <div class="form-group">
                     <input type="text" class="form-control" name="username" placeholder="Username">
                 </div>

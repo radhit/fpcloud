@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- <link href="{{URL::to('css/font-awesome.min.css')}}" rel="stylesheet"> -->
+    <script src="{{URL::to('js/jquery.min.js')}}"></script>
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- jvectormap -->
@@ -131,7 +133,7 @@
                 <!-- form start -->
 
                 @foreach($nama as $key)
-                <form class="form-horizontal" action="{{URL::to('updatedata')}}" method="POST">
+                <form class="form-horizontal" action="{{URL::to('updatedata')}}" method="POST" enctype="multipart/form-data">
                   <div class="box-body">
                     <div class="form-group">
                       <label for="inputEmail3" class="col-sm-2 control-label">Nama Lengkap</label>
@@ -151,20 +153,13 @@
                         <input type="text" class="form-control" id="inputEmail3" name="username" value="{{$key['username']}}">
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                      <div class="col-sm-10">
-                        <input type="password" class="form-control" id="inputPassword3"  name="password" placeholder="Password">
-                      </div>
-                    </div>
-              
+                  
                       <div class="form-group">
-                      <label for="inputEmail3" class="col-sm-2 control-label">Status Pengguna</label>
+                      <label for="inputEmail3" class="col-sm-2 control-label">Bukti Pembayaran</label>
                         <div class="col-sm-10">
-                          <select class="form-control" name="status">
-                            <option value="0">Free</option>
-                            <option value="1">Paid</option>
-                          </select>
+                             
+                    <input type="file" class="form-control" name="pembayaran" placeholder="Bukti Pembayaran">
+                
                         </div>
                       </div>
                       

@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- <link href="{{URL::to('css/font-awesome.min.css')}}" rel="stylesheet"> -->
+    <script src="{{URL::to('js/jquery.min.js')}}"></script>
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- jvectormap -->
@@ -25,6 +27,9 @@
     <script type="text/javascript">
   function notifkeren(){
   swal("Sukses", "Kontributor Berhasil Ditambahkan", "success")
+  }
+   function notifkeren2(){
+  swal("Sukses", "file berhasil dihapus", "success")
   }
     function notifkerengagal(){
   swal("gagal", "Username yang anda masukan tidak terdaftar", "error")
@@ -114,6 +119,9 @@
       </aside>
   @if (Session::has('berhasil'))
         <script type="text/javascript">notifkeren();</script>
+   @elseif (Session::has('berhasildelete'))
+        <script type="text/javascript">notifkeren2();</script>
+    
     
     @elseif (Session::has('gagal'))
         <script type="text/javascript">notifkerengagal();</script>
@@ -135,6 +143,46 @@
         <!-- Main content -->
         <section class="content">
 
+        	<div class="row">
+        		<div class="col-md-4">
+        			<div class="box box-info">
+        				<div class="box-header with-border">
+        					<h3 class="box-title">Status Pengguna</h3>
+        				</div>
+        				<div class="box-body">
+                  @if($status==NULL)
+        					<h4>FREE</h4>
+                  @else
+                  <h4>PREMIUM USER</h4>
+                  @endif
+
+        				</div>
+        			</div>
+        		</div>
+        		<div class="col-md-4">
+        			<div class="box box-info">
+        				<div class="box-header with-border">
+        					<h3 class="box-title">Jumlah Dokumen</h3>
+        				</div>
+        				<div class="box-body">
+        					<h4>{{$jumlah}}</h4>
+        				</div>
+        			</div>
+        		</div>
+
+            @if($status==NULL)
+        		<div class="col-md-4">
+        			<div class="box box-info">
+        				<div class="box-header with-border">
+        					<h3 class="box-title">Upgrade Paket</h3>
+        				</div>
+        				<div class="box-body">
+                <a href="{{URL::to('profile')}}"class="btn btn-sm btn-warning btn-flat pull-right" style="margin-left:1%" >UPGRADE PREMIUM</a>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+          @endif
           <!-- Main row -->
           <div class="row">
             <!-- Left col -->
@@ -167,7 +215,7 @@
                       @foreach($nama as $key)
                         <tr>
 
-                          <td>{{$jumlah}}</td>
+                          <td>{{$key['id']}}</td>
                           <td>{{$key['judul']}}</td>
                           <td>{{$key['timestamp']}}</td>
                           <?php $id=$key['id'];?>
@@ -180,7 +228,7 @@
                             @endif
                           </td>
                           <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahkontributor{{$id}}" data-id="{{$id}}">Tambah Kontributor</button></td>
-                          <td><a href="hapus_dokumen.php" class="btn btn-danger" style="margin-left:1%">HAPUS DOKUMEN</a></td>
+                          <td><a href="{{URL::to('deletefile')}}/{{$key['id']}}" class="btn btn-danger" style="margin-left:1%">HAPUS DOKUMEN</a></td>
                         </tr>
 
                      @endforeach
@@ -211,7 +259,7 @@
 
       @if(($jumlah<5 && $status==NULL)  || $status!=NULL )
 
-   <form action="http://10.151.36.100:5000/tambahdokumen" method="POST">
+   <form action="http://localhost:5000/tambahdokumen" method="POST">
         <div class="form-group">
           <input name="judul" type="text" placeholder="Judul Dokumen" class="form-control">
         </div>
